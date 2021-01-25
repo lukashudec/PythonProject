@@ -1,4 +1,3 @@
-import pytest
 import calendar_merge as c
 
 c1 = [['9:00', '10:30'], ['12:00', '13:00'], ['16:00', '18:00']]
@@ -9,16 +8,6 @@ output = [['15:00', '16:00'], ['18:00', '18:30']]
 
 
 def test_get_free_block_general():
-    assert output == c.get_free_block(c1, b1, c2, b2),\
-        "actual different from expected"
-
-
-def test_get_free_block_output_format():
-    assert output == c.get_free_block(c1, b1, c2, b2),\
-        "actual different from expected"
-
-
-def test_get_free_block_30min_window():
     assert output == c.get_free_block(c1, b1, c2, b2),\
         "actual different from expected"
 
