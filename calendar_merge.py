@@ -1,6 +1,6 @@
 def format_input(inp_list, inp_bound) -> list:
     result = []
-    inp_list = [['0:00', inp_bound[0]]]+inp_list+[[inp_bound[1], '24:00']]
+    inp_list = [['0:00', inp_bound[0][0]]]+inp_list+[[inp_bound[0][1], '24:00']]
     for i in inp_list:
         h, m = i[0].split(':')
         h1, m1 = i[1].split(':')
