@@ -1,11 +1,8 @@
 from behave import given, then, when
-from hamcrest import *
-from selenium import *
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
-page = 'https://www.duckduckgo.com'
 driver = webdriver.Chrome('C:/Users/lenovo/Downloads/chromedriver_win32_87/chromedriver.exe')
 driver.implicitly_wait(3)
 
