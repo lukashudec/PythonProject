@@ -2,7 +2,9 @@ from behave import given, then, when
 from hamcrest import *
 import requests
 
-API_DEF = 'https://jsonplaceholder.typicode.com'
+API_ENDPOINT = 'https://jsonplaceholder.typicode.com'
+GET_POSTS = API_ENDPOINT+'/posts/'
+POST_POSTS = API_ENDPOINT+'/posts/'
 
 
 @given('title:{title}, body:{body}, userId:{user_id}')
@@ -12,18 +14,14 @@ def step(context, title, body, user_id):
 
 @when('I request post with id:{post_id}')
 def step(context, post_id):
-    url = API_DEF + '/posts/' + str(post_id)
-    response = requests.get(url)
-    context.response = response
-    context.response_json = response.json()
+    context.response = requests.get(GET_POSTS + str(post_id))
+    context.response_json = context.response.json()
 
 
 @when('I send post request')
 def step(context):
-    url = API_DEF + '/posts/'
-    response = requests.post(url, context.request)
-    context.response = response
-    context.response_json = response.json()
+    context.response = requests.post(POST_POSTS, context.request)
+    context.response_json = context.response.json()
 
 
 @then('response match key:"{key}" equal to "{value}"')

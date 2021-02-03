@@ -38,3 +38,11 @@ def step(context, search_result):
 def step(context, search_result):
     elements = context.driver.find_elements_by_xpath(search_result)
     assert_that(elements, is_not(equal_to(None)), 'Elements not found')
+
+
+def page_map_preparation(driver):
+    root = 'https://www.boardgamegeek.com/'
+    search_bar = driver.find_element(By.NAME, "searchTerm")
+    game_link = driver.find_elements_by_link_text('Prophecy')
+    game_image = driver.find_elements_by_xpath("//img[@alt='Board Game: Prophecy']")
+
