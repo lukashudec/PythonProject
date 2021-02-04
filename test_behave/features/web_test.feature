@@ -21,12 +21,26 @@ Feature: LambdaTest search
 
   Scenario Outline: Search for google on google
     Examples: Data
-      | search_option | search_result     |
-      | API           | BGG XML API2      |
-      | contest       | Official Contests |
+      | search_option | search_result       |
+      | API           | BGG XML API2        |
+      | contest       | Official Contests   |
       | contest       | Unofficial Contests |
     Given I am on the boardgamegeek FAQ page
     Then search box is present
     And BoardGameGeek FAQ article is present
     When I search for <search_option>
     Then List of results with <search_result> is shown
+
+  Scenario Outline: Different style of workflow scenario
+    Examples: Data
+      | search_option | search_result       |
+      | API           | BGG XML API2        |
+      | contest       | Official Contests   |
+      | contest       | Unofficial Contests |
+    * I am on the boardgamegeek homepage
+    * I click on Help
+    * I click on FAQ
+    * search box is present
+    * BoardGameGeek FAQ arcticle is present
+    * search for <search_option>
+    * List of results with <search_result> is shown
