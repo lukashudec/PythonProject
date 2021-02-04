@@ -32,3 +32,4 @@ def get_free_block(cal1, bound1, cal2, bound2) -> list:
              get_free_time(
                     sorted(format_input(cal1, bound1)+format_input(cal2, bound2))))
 
+
