@@ -14,10 +14,21 @@ class Calendar:
         self.pretty_free = self.__format_output(self.free_time)
 
     @classmethod
-    def from_calendars(cls, cal1: Calendar, cal2: Calendar):
+    def merge_calendars(cls, cal1: Calendar, cal2: Calendar):
         cale = sorted(cal1.raw_calendar + cal2.raw_calendar)
         bou = [[max(cal1.bounds[0][0], cal2.bounds[0][0]), min(cal1.bounds[0][1], cal2.bounds[0][1])]]
         return cls(cale, bou)
+
+    @classmethod
+    # testability improvement
+    def from_string(cls, calendar_string, bound_string):
+        return cls(cls.extract_time(calendar_string), cls.extract_time(bound_string))
+
+    def extract_time(input_string):
+        result = []
+        for time_frame in input_string.split(','):
+            result.append(time_frame.split('-'))
+        return result
 
     def __format_input(self) -> list:
         result = []
@@ -41,15 +52,16 @@ class Calendar:
         return time
 
     def __f_hour(self, hour):
-        return self.__format_time(hour // 60)
+        return self.__format_time((hour // 60))
 
     def __f_min(self, minute):
-        return self.__format_time(minute % 60)
+        return self.__format_time((minute % 60))
 
     def __format_output(self, calendar_type) -> list:
         result = []
         for i in calendar_type:
-            result.append([self.__f_hour(i[0]) + ':' + self.__f_min(i[0]), self.__f_hour(i[1]) + ':' + self.__f_min(i[1])])
+            result.append(
+                [self.__f_hour(i[0]) + ':' + self.__f_min(i[0]), self.__f_hour(i[1]) + ':' + self.__f_min(i[1])])
         return result
 
     def get_free_time(self) -> list:
@@ -67,5 +79,11 @@ bound2 = [['10:00', '18:30']]
 cal = Calendar(calendar1, bound1)
 cal2 = Calendar(calendar2, bound2)
 
-cal3 = Calendar.from_calendars(cal, cal2)
+cal3 = Calendar.merge_calendars(cal, cal2)
 print(cal3.get_free_time())
+
+calendar1 = '9:00-10:30,12:00-13:00,16:00-18:00'
+bound1 = '9:00-20:00'
+cal4 = Calendar.from_string(calendar1, bound1)
+print(cal4.raw_calendar)
+print(cal4.bounds)
