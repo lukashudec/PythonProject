@@ -1,41 +1,24 @@
 class Calendar:
-    raw_calendar = []
-    bounds = []
-    calendar = []
-    free_time = []
-    pretty_cal = []
-    pretty_free = []
 
     def __init__(self, raw_calendar: list, bounds: list):
         self.raw_calendar = raw_calendar
         self.bounds = bounds
-
         self.calendar = self.__format_input()
-        self.free_time = self.__get_free_time()
 
-        self.pretty_cal = self.__format_output(self.calendar)
-        self.pretty_free_time = self.__format_output(self.free_time)
-
-    @classmethod
-    def merge_calendars(cls, cal1, cal2):
-        cale = sorted(cal1.raw_calendar + cal2.raw_calendar)
-        bou = [[max(cal1.bounds[0][0], cal2.bounds[0][0]), min(cal1.bounds[0][1], cal2.bounds[0][1])]]
-        return cls(cale, bou)
-
-    def merge_with_calendar(self, cal2):
-        return self.merge_calendars(self,cal2)
+    def __eq__(self, other):
+        if isinstance(other, Calendar):
+            return self.raw_calendar == other.raw_calendar and self.bounds == other.bounds
+        return False
 
     @classmethod
     # testability improvement
     def from_string(cls, calendar_string, bound_string):
-        return cls(cls.extract_time(calendar_string), cls.extract_time(bound_string))
+        return cls(cls.extract_time(calendar_string), cls.extract_time(bound_string), )
 
-    @staticmethod
-    def extract_time(input_string):
-        result = []
-        for time_frame in input_string.split(','):
-            result.append(time_frame.split('-'))
-        return result
+    def merge_with_calendar(self, cal2):
+        cale = sorted(self.raw_calendar + cal2.raw_calendar)
+        bou = [[max(self.bounds[0][0], cal2.bounds[0][0]), min(self.bounds[0][1], cal2.bounds[0][1])]]
+        return Calendar(cale, bou)
 
     def __format_input(self) -> list:
         result = []
@@ -46,43 +29,37 @@ class Calendar:
             result.append([int(h) * 60 + int(m), int(h1) * 60 + int(m1)])
         return sorted(result)
 
-    def __get_free_time(self) -> list:
+    def get_free_time(self, min_time_frame=30) -> list:
         result = []
         for i in range(0, len(self.calendar) - 1, 1):
-            if self.calendar[i + 1][0] - self.calendar[i][1] >= 30:
+            if self.calendar[i + 1][0] - self.calendar[i][1] >= min_time_frame:
                 result.append([self.calendar[i][1], self.calendar[i + 1][0]])
         return result
 
+    def get_free_time_pretty(self, min_time_frame=30):
+        return self.__format_output(self.get_free_time(min_time_frame))
+
+    def get_possible_events_with(self, calendar2, min_time_frame=30):
+        return self.merge_with_calendar(calendar2).get_free_time_pretty(min_time_frame)
+
+    def __format_output(self, calendar_type) -> list:
+        result = []
+        for i in calendar_type:
+            result.append(
+                [self.__f_time(i[0] // 60) + ':' + self.__f_time(i[0] % 60),
+                 self.__f_time(i[1] // 60) + ':' + self.__f_time(i[1] % 60)])
+        return result
+
     @staticmethod
-    def __format_time(time):
+    def __f_time(time):
         time = str(time)
         if len(str(time)) == 1:
             time = '0' + time
         return time
 
     @staticmethod
-    def __f_hour(hour):
-        return Calendar.__format_time((hour // 60))
-
-    @staticmethod
-    def __f_min(minute):
-        return Calendar.__format_time((minute % 60))
-
-    def __format_output(self, calendar_type) -> list:
+    def extract_time(input_string):
         result = []
-        for i in calendar_type:
-            result.append(
-                [self.__f_hour(i[0]) + ':' + self.__f_min(i[0]), self.__f_hour(i[1]) + ':' + self.__f_min(i[1])])
+        for time_frame in input_string.split(','):
+            result.append(time_frame.split('-'))
         return result
-
-    def get_free_time(self) -> list:
-        result = []
-        for i in range(0, len(self.calendar) - 1, 1):
-            if self.calendar[i + 1][0] - self.calendar[i][1] >= 30:
-                result.append([self.calendar[i][1], self.calendar[i + 1][0]])
-        return self.__format_output(result)
-
-    def is_equal(self, calendar2):
-        if self.raw_calendar == calendar2.raw_calendar and self.bounds == calendar2.bounds:
-            return True
-        return False
