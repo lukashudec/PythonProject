@@ -22,6 +22,9 @@ class Calendar:
         bou = [[max(cal1.bounds[0][0], cal2.bounds[0][0]), min(cal1.bounds[0][1], cal2.bounds[0][1])]]
         return cls(cale, bou)
 
+    def merge_with_calendar(self, cal2):
+        return self.merge_calendars(self,cal2)
+
     @classmethod
     # testability improvement
     def from_string(cls, calendar_string, bound_string):

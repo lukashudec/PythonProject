@@ -15,6 +15,14 @@ def test_calendar_creation():
     assert cal1.is_equal(cal2), 'calendars are not equal'
 
 
+def test_calendar_merge():
+    cal1 = Calendar(calendar1, bound1)
+    cal2 = Calendar(calendar2, bound2)
+    merged_cal1 = cal1.merge_with_calendar(cal2)
+    merged_cal2 = Calendar.merge_calendars(cal1, cal2)
+    assert merged_cal1.is_equal(merged_cal2), 'calendars are not equal'
+
+
 def test_calendar_output_pretty():
     raw_output = [[900, 960], [1080, 1110]]
     cal1 = Calendar(calendar1, bound1)
