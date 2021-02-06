@@ -1,7 +1,10 @@
-from calendar import Calendar
-
-
 class Calendar:
+    raw_calendar = []
+    bounds = []
+    calendar = []
+    free_time = []
+    pretty_cal = []
+    pretty_free = []
 
     def __init__(self, raw_calendar: list, bounds: list):
         self.raw_calendar = raw_calendar
@@ -11,10 +14,10 @@ class Calendar:
         self.free_time = self.__get_free_time()
 
         self.pretty_cal = self.__format_output(self.calendar)
-        self.pretty_free = self.__format_output(self.free_time)
+        self.pretty_free_time = self.__format_output(self.free_time)
 
     @classmethod
-    def merge_calendars(cls, cal1: Calendar, cal2: Calendar):
+    def merge_calendars(cls, cal1, cal2):
         cale = sorted(cal1.raw_calendar + cal2.raw_calendar)
         bou = [[max(cal1.bounds[0][0], cal2.bounds[0][0]), min(cal1.bounds[0][1], cal2.bounds[0][1])]]
         return cls(cale, bou)
@@ -24,6 +27,7 @@ class Calendar:
     def from_string(cls, calendar_string, bound_string):
         return cls(cls.extract_time(calendar_string), cls.extract_time(bound_string))
 
+    @staticmethod
     def extract_time(input_string):
         result = []
         for time_frame in input_string.split(','):
@@ -46,16 +50,20 @@ class Calendar:
                 result.append([self.calendar[i][1], self.calendar[i + 1][0]])
         return result
 
-    def __format_time(self, time):
+    @staticmethod
+    def __format_time(time):
         time = str(time)
-        if len(str(time)) == 1: time = '0' + time
+        if len(str(time)) == 1:
+            time = '0' + time
         return time
 
-    def __f_hour(self, hour):
-        return self.__format_time((hour // 60))
+    @staticmethod
+    def __f_hour(hour):
+        return Calendar.__format_time((hour // 60))
 
-    def __f_min(self, minute):
-        return self.__format_time((minute % 60))
+    @staticmethod
+    def __f_min(minute):
+        return Calendar.__format_time((minute % 60))
 
     def __format_output(self, calendar_type) -> list:
         result = []
@@ -71,19 +79,7 @@ class Calendar:
                 result.append([self.calendar[i][1], self.calendar[i + 1][0]])
         return self.__format_output(result)
 
-
-calendar1 = [['09:00', '10:30'], ['12:00', '13:00'], ['16:00', '18:00']]
-bound1 = [['09:00', '20:00']]
-calendar2 = [['10:00', '11:45'], ['12:30', '14:30'], ['14:30', '15:00'], ['16:00', '17:00']]
-bound2 = [['10:00', '18:30']]
-cal = Calendar(calendar1, bound1)
-cal2 = Calendar(calendar2, bound2)
-
-cal3 = Calendar.merge_calendars(cal, cal2)
-print(cal3.get_free_time())
-
-calendar1 = '9:00-10:30,12:00-13:00,16:00-18:00'
-bound1 = '9:00-20:00'
-cal4 = Calendar.from_string(calendar1, bound1)
-print(cal4.raw_calendar)
-print(cal4.bounds)
+    def is_equal(self, calendar2):
+        if self.raw_calendar == calendar2.raw_calendar and self.bounds == calendar2.bounds:
+            return True
+        return False

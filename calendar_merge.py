@@ -9,11 +9,21 @@ def format_input(inp_list, inp_bound) -> list:
 
 
 def get_free_time(inp_list) -> list:
+    inp_list = sorted(inp_list)
     result = []
     for i in range(0, len(inp_list) - 1, 1):
         if inp_list[i + 1][0] - inp_list[i][1] >= 30:
             result.append([inp_list[i][1], inp_list[i + 1][0]])
     return result
+
+
+def get_free_time_pretty(inp_list) -> list:
+    inp_list = sorted(inp_list)
+    result = []
+    for i in range(0, len(inp_list) - 1, 1):
+        if inp_list[i + 1][0] - inp_list[i][1] >= 30:
+            result.append([inp_list[i][1], inp_list[i + 1][0]])
+    return format_output(result)
 
 
 def format_output(inp_list) -> list:
@@ -28,8 +38,7 @@ def format_output(inp_list) -> list:
 
 
 def get_free_block(cal1, bound1, cal2, bound2) -> list:
-    return format_output(
-             get_free_time(
-                    sorted(format_input(cal1, bound1)+format_input(cal2, bound2))))
+    return get_free_time_pretty(
+                    (format_input(cal1, bound1)+format_input(cal2, bound2)))
 
 
