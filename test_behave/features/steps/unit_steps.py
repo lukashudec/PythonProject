@@ -1,4 +1,4 @@
-from behave import given, then, when
+from behave import given, then
 from calendar_merge import *
 from hamcrest import *
 

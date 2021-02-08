@@ -1,4 +1,4 @@
-class Calendar:
+class CalendarClass:
 
     def __init__(self, raw_calendar: list, bounds: list):
         self.raw_calendar = raw_calendar
@@ -6,7 +6,7 @@ class Calendar:
         self.calendar = self.__format_input()
 
     def __eq__(self, other):
-        if isinstance(other, Calendar):
+        if isinstance(other, CalendarClass):
             return self.raw_calendar == other.raw_calendar and self.bounds == other.bounds
         return False
 
@@ -18,7 +18,7 @@ class Calendar:
     def merge_with_calendar(self, cal2):
         cale = sorted(self.raw_calendar + cal2.raw_calendar)
         bou = [[max(self.bounds[0][0], cal2.bounds[0][0]), min(self.bounds[0][1], cal2.bounds[0][1])]]
-        return Calendar(cale, bou)
+        return CalendarClass(cale, bou)
 
     def __format_input(self) -> list:
         result = []
