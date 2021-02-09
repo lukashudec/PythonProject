@@ -13,7 +13,7 @@ Feature: LambdaTest search
     And Search results for xpath: //img[@alt='Board Game: <game_name>'] should appear
     And verify list
 
-
+  @wip1
   Scenario: Login
     Given I am on the https://www.boardgamegeek.com/ homepage
     When I click on Sign in button

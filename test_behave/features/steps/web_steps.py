@@ -18,17 +18,17 @@ def get_list_of_games():
     return result
 
 
-@given('I am on the {page} homepage')
-@given('I am on the {page} FAQ page')
-def step(context, page):
-    context.driver.get(page)
+@given('I am on the {page_url} homepage')
+@given('I am on the {page_url} FAQ page')
+def step(context, page_url):
+    page = BoardGamePage(context.driver)
+    page.visit(page_url)
 
 
 @when('I enter search term: {search}')
 def step(context, search):
-    element = context.driver.find_element(By.NAME, "searchTerm")
-    element.send_keys(search)
-    element.send_keys(Keys.ENTER)
+    page = BoardGamePage(context.driver)
+    page.page.search_bar.send_keys(search).send_keys(Keys.ENTER)
 
 
 @then('Search results for link_text: {search_result} should appear')
@@ -45,27 +45,30 @@ def step(context, search_result):
 
 @when('I click on Sign in button')
 def step(context):
-    context.driver.find_element(By.LINK_TEXT, "Sign In").click()
+    page = BoardGamePage(context.driver)
+    page.login.click()
 
 
 @then('it contains field username')
 def step(context):
-    username = context.driver.find_element(By.ID, "inputUsername")
-    username.send_keys("user")
-    assert_that(username, is_not(equal_to(None)), 'Elements not found')
+    page = BoardGamePage(context.driver)
+    page.username.send_keys("user")
+    assert_that(page.username, is_not(equal_to(None)), 'Elements not found')
 
 
 @then('it contains field password')
 def step(context):
-    password = context.driver.find_element(By.ID, "inputPassword")
-    password.send_keys("pass")
-    assert_that(password, is_not(equal_to(None)), 'Elements not found')
+    page = BoardGamePage(context.driver)
+    page.password.send_keys("pass")
+    #password = context.driver.find_element(*page.password)
+    #password.send_keys("pass")
+    #assert_that(password, is_not(equal_to(None)), 'Elements not found')
 
 
 @then('popup is shown')
 def step(context):
-    login_form = context.driver.find_element(By.XPATH, "//form[@name='loginform']")
-    assert_that(login_form, is_not(equal_to(None)), 'Elements not found')
+    page = BoardGamePage(context.driver)
+    assert_that(page.login_form, is_not(equal_to(None)), 'Elements not found')
 
 
 @then('verify list')
@@ -76,63 +79,85 @@ def step(context):
 @given('search box is present')
 @then('search box is present')
 def step(context):
-    help_search = context.driver.find_element(By.ID, "wiki-search")
-    assert_that(help_search, is_not(equal_to(None)), 'Elements not found')
+    page = BoardGamePage(context.driver)
+    assert_that(page.help_search, is_not(equal_to(None)), 'Elements not found')
 
 
 @given('BoardGameGeek FAQ article is present')
 @then('BoardGameGeek FAQ article is present')
 def step(context):
-    table = context.driver.find_element(By.XPATH, "//table[@class='forum_table']")
+    page = BoardGamePage(context.driver)
+    table = page.forum_table
     assert_that(table, is_not(equal_to(None)), 'Elements not found')
-    result: WebElement = table.find_element(By.XPATH, "//a[@href='/wiki/page/BoardGameGeek_FAQ']")
+    result = page.faq_article
     assert_that(result, is_not(equal_to(None)), 'Elements not found')
 
 
 @given('I search for {search_option}')
 @when('I search for {search_option}')
 def step(context, search_option):
-    help_search = context.driver.find_element(By.ID, "wiki-search")
-    help_search.send_keys(search_option)
-    help_search_button = context.driver.find_element(By.NAME, "B1")
-    help_search_button.click()
+    page = BoardGamePage(context.driver)
+    page.help_search.send_keys(search_option)
+    page.help_search_button.click()
 
 
 @given('List of results with {search_result} is shown')
 @then('List of results with {search_result} is shown')
 def step(context, search_result):
-    table: WebElement = context.driver.find_element(By.XPATH, "//table[@class='forum_table']")
+    page = BoardGamePage(context.driver)
+    table = page.forum_table
+    result = table.find_element(By.XPATH, "//a[@href='/wiki/page/"+search_result+"']")
     assert_that(table, is_not(equal_to(None)), 'Elements not found')
-    result: WebElement = table.find_element(By.XPATH, "//a[@href='/wiki/page/"+search_result+"']")
     assert_that(result, is_not(equal_to(None)), 'Elements not found')
 
 
 @given('I click on Help')
 def step(context):
-    help_search = context.driver.find_element(By.XPATH, "//button[contains(.,'Help ')]")
-    help_search.click()
-    assert_that(help_search, is_not(equal_to(None)), 'Elements not found')
+    page = BoardGamePage(context.driver)
+    page.help_dropdown.click()
 
 
 @given('I click on FAQ')
 def step(context):
-    faq = context.driver.find_element(By.LINK_TEXT, "FAQ")
-    faq.click()
-    assert_that(faq, is_not(equal_to(None)), 'Elements not found')
+    page = BoardGamePage(context.driver)
+    page.faq_button.click()
 
 
-'''
-def page_map_preparation(driver):
+class BoardGamePage:
     root = 'https://www.boardgamegeek.com/'
-    search_bar = driver.find_element(By.NAME, "searchTerm")
-    game_link = driver.find_elements_by_link_text('Prophecy')
-    game_image = driver.find_elements_by_xpath("//img[@alt='Board Game: Prophecy']")
-    login = driver.find_element(By.LINK_TEXT, "Sign In")
-    username = driver.find_element(By.ID, "inputUsername")
-    password = driver.find_element(By.ID, "inputPassword")
-    loginform = driver.find_element(By.XPATH, "//button[contains(.,'Cancel')]")
-    help_dropdown = driver.find_element(By.XPATH, "//button[contains(.,'Help ')]")
-    faq_button = driver.find_element(By.LINK_TEXT, "FAQ")
-    help_search = driver.find_element(By.ID, "wiki-search")
-    help_search_button = driver.find_element(By.NAME, "B1")
-'''
+    faq = 'https://www.boardgamegeek.com/wiki/page/BoardGameGeek_FAQ'
+    search_bar = (By.NAME, "searchTerm")
+    game_link = (By.LINK_TEXT, 'Prophecy')
+    game_image = (By.XPATH, "//img[@alt='Board Game: Prophecy']")
+    login = (By.LINK_TEXT, "Sign In")
+    username = (By.ID, "inputUsername")
+    password = (By.ID, "inputPassword")
+    login_form = (By.XPATH, "//button[contains(.,'Cancel')]")
+    help_dropdown = (By.XPATH, "//button[contains(.,'Help ')]")
+    faq_button = (By.LINK_TEXT, "FAQ")
+    help_search = (By.ID, "wiki-search")
+    help_search_button = (By.NAME, "B1")
+    login_form = (By.XPATH, "//form[@name='loginform']")
+    forum_table = (By.XPATH, "//table[@class='forum_table']")
+    faq_article = (By.XPATH, "//a[@href='/wiki/page/BoardGameGeek_FAQ']")
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def __getattribute__(self, attr):
+        __dict__ = BoardGamePage.__dict__.get(attr)
+        if type(__dict__) is tuple:
+            print(str(__dict__))
+            print(str(":: "+tuple(__dict__)[0]))
+            if str(tuple(__dict__)[0]) in ("id","xpath","link text","partial link text","name","tag name","class name","css selector"):
+                return self.get(__dict__)
+        return super(BoardGamePage, self).__getattribute__(attr)
+
+
+    def visit(self,page):
+        self.driver.get(page)
+
+    def get(self,loc):
+        if type(loc) is WebElement:
+            return loc
+        return self.driver.find_element(*loc)
