@@ -28,7 +28,7 @@ def step(context, page_url):
 @when('I enter search term: {search}')
 def step(context, search):
     page = BoardGamePage(context.driver)
-    page.page.search_bar.send_keys(search).send_keys(Keys.ENTER)
+    page.search_bar.send_keys(search+Keys.ENTER)
 
 
 @then('Search results for link_text: {search_result} should appear')
@@ -60,9 +60,7 @@ def step(context):
 def step(context):
     page = BoardGamePage(context.driver)
     page.password.send_keys("pass")
-    #password = context.driver.find_element(*page.password)
-    #password.send_keys("pass")
-    #assert_that(password, is_not(equal_to(None)), 'Elements not found')
+    assert_that(page.password, is_not(equal_to(None)), 'Elements not found')
 
 
 @then('popup is shown')
