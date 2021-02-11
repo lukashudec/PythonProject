@@ -1,10 +1,12 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+
 from test_behave.features.POM.base_page import BasePage
 
 
 class BoardGameBasePage(BasePage):
     root = None
-    search_bar = (By.NAME, "searchTerm")
+    search_bar:WebElement = (By.NAME, "searchTerm")
     login = (By.LINK_TEXT, "Sign In")
     username = (By.ID, "inputUsername")
     password = (By.ID, "inputPassword")
