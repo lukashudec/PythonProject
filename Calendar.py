@@ -1,3 +1,6 @@
+from typing import List
+
+
 class CalendarClass:
 
     def __init__(self, raw_calendar: list, bounds: list):
@@ -37,28 +40,25 @@ class CalendarClass:
         return result
 
     def get_free_time_pretty(self, min_time_frame=30):
-        return self.__format_output(self.get_free_time(min_time_frame))
+        result = []
+        for i in self.get_free_time(min_time_frame):
+            result.append(
+                [self.__format_time(i[0] // 60) + ':' + self.__format_time(i[0] % 60),
+                 self.__format_time(i[1] // 60) + ':' + self.__format_time(i[1] % 60)])
+        return result
 
     def get_possible_events_with(self, calendar2, min_time_frame=30):
         return self.merge_with_calendar(calendar2).get_free_time_pretty(min_time_frame)
 
-    def __format_output(self, calendar_type) -> list:
-        result = []
-        for i in calendar_type:
-            result.append(
-                [self.__f_time(i[0] // 60) + ':' + self.__f_time(i[0] % 60),
-                 self.__f_time(i[1] // 60) + ':' + self.__f_time(i[1] % 60)])
-        return result
-
     @staticmethod
-    def __f_time(time):
+    def __format_time(time):
         time = str(time)
-        if len(str(time)) == 1:
-            time = '0' + time
+        if len(time) == 1:
+            return '0' + time
         return time
 
     @staticmethod
-    def extract_time(input_string):
+    def extract_time(input_string: List[List[str]]):
         result = []
         for time_frame in input_string.split(','):
             result.append(time_frame.split('-'))

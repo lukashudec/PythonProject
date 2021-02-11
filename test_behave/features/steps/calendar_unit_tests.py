@@ -3,22 +3,22 @@ from Calendar import CalendarClass
 from hamcrest import *
 
 
-@given('xx calendars')
-@given('xx calendar')
+@given('calendars')
+@given('calendar')
 def step_impl(context):
     context.calendars = []
     for row in context.table:
         context.calendars.append(CalendarClass.from_string(row['calendars'], row['bounds']))
 
 
-@then("xx possible meetings at '{expected_result}'")
+@then("possible meetings at '{expected_result}'")
 def step_imp(context, expected_result):
     output_calendar = context.calendars[0].get_possible_events_with(context.calendars[1])
     assert_that(output_calendar,
                 equal_to(CalendarClass.extract_time(expected_result)), "different values expected")
 
 
-@then("xx merged calendar")
+@then("merged calendar")
 def step_impl(context):
     cal1: CalendarClass = context.calendars[0]
     cal2 = context.calendars[1]
@@ -32,7 +32,7 @@ def step_impl(context):
                 equal_to(output_calendar.bounds), "different values expected")
 
 
-@then("xx possible meetings with {min_duration} are at {outcome}")
+@then("possible meetings with {min_duration} are at {outcome}")
 def step_impl(context, min_duration, outcome):
     calendar = context.calendars[0]
     if outcome == '-':

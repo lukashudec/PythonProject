@@ -7,7 +7,7 @@ Feature: LambdaTest search
       | Prophecy          |
       | Gloomhaven        |
       | Terraforming Mars |
-    Given I am on the https://www.boardgamegeek.com/ homepage
+    Given I am on the homepage
     When I enter search term: <game_name>
     Then Search results for link_text: <game_name> should appear
     And Search results for xpath: //img[@alt='Board Game: <game_name>'] should appear
@@ -15,7 +15,7 @@ Feature: LambdaTest search
 
   @wip1
   Scenario: Login
-    Given I am on the https://www.boardgamegeek.com/ homepage
+    Given I am on the homepage
     When I click on Sign in button
     Then popup is shown
     And it contains field username
@@ -28,7 +28,7 @@ Feature: LambdaTest search
       | API           | BGG_XML_API2        |
       | contest       | Official_Contests   |
       | contest       | Unofficial_Contests |
-    Given I am on the https://www.boardgamegeek.com/wiki/page/BoardGameGeek_FAQ FAQ page
+    Given I am on the FAQ page
     Then search box is present
     And BoardGameGeek FAQ article is present
     When I search for <search_option>
@@ -41,7 +41,7 @@ Feature: LambdaTest search
       | API           | BGG_XML_API2        |
       | contest       | Official_Contests   |
       | contest       | Unofficial_Contests |
-    * I am on the https://www.boardgamegeek.com/wiki/page/BoardGameGeek_FAQ homepage
+    * I am on the FAQ page
     * I click on Help
     * I click on FAQ
     * search box is present
