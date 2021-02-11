@@ -41,10 +41,20 @@ Feature: LambdaTest search
       | API           | BGG_XML_API2        |
       | contest       | Official_Contests   |
       | contest       | Unofficial_Contests |
-    * I am on the FAQ page
+    * I am on the homepage
     * I click on Help
     * I click on FAQ
     * search box is present
     * BoardGameGeek FAQ article is present
     * I search for <search_option>
     * List of results with <search_result> is shown
+
+
+@wip2
+  Scenario Outline: trying another approach
+    Examples: Data
+      | search_option | search_result       |
+      | API           | BGG_XML_API2        |
+      | contest       | Official_Contests   |
+      | contest       | Unofficial_Contests |
+  * scenario hidden in one step <search_option> , <search_result>

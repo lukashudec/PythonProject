@@ -1,7 +1,7 @@
 from selenium.webdriver.remote.webelement import WebElement
 
 
-class welement():
+class welement(WebElement):
     driver = None
 
     def __init__(self, loc_type, loc_str):
@@ -10,3 +10,8 @@ class welement():
 
     def __get__(self) -> WebElement:
         return self.driver.find_element(self.loc_type, self.loc_str)
+
+
+some = welement('xpath', '...')
+
+
