@@ -15,32 +15,14 @@ class BoardGameBasePage(BasePage):
     def visit(self):
         self.driver.get(self.root)
 
-    def __getattributee__(self, attr):
-        attr_name = __class__.__dict__.get(attr)
-        if type(attr_name) is tuple:
-            return self.driver.find_element(*attr_name)
-        return super(__class__, self).__getattribute__(attr)
-
 
 class MainPage(BoardGameBasePage):
     root = 'https://www.boardgamegeek.com/'
-
-    def __getattributee__(self, attr):
-        attr_name = __class__.__dict__.get(attr)
-        if type(attr_name) is tuple:
-            return self.driver.find_element(*attr_name)
-        return super(__class__, self).__getattribute__(attr)
 
 
 class GeekSearchResultPage(BoardGameBasePage):
     game_link = (By.LINK_TEXT, 'Prophecy')
     game_image = (By.XPATH, "//img[@alt='Board Game: Prophecy']")
-
-    def __getattributee__(self, attr):
-        attr_name = __class__.__dict__.get(attr)
-        if type(attr_name) is tuple:
-            return self.driver.find_element(*attr_name)
-        return super(__class__, self).__getattribute__(attr)
 
 
 class FaqPage(BoardGameBasePage):
@@ -50,8 +32,3 @@ class FaqPage(BoardGameBasePage):
     forum_table = (By.XPATH, "//table[@class='forum_table']")
     faq_article = (By.XPATH, "//a[@href='/wiki/page/BoardGameGeek_FAQ']")
 
-    def __getattributee__(self, attr):
-        attr_name = __class__.__dict__.get(attr)
-        if type(attr_name) is tuple:
-            return self.driver.find_element(*attr_name)
-        return super(__class__, self).__getattribute__(attr)
