@@ -4,7 +4,7 @@ from behave import given, then, when, step
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from hamcrest import *
-from test_behave.features.POM.bbg_base_page import FaqPage, MainPage
+from test_behave.features.POM.base_page import FaqPage, MainPage, SignInPage
 
 
 @given('I am on the homepage')
@@ -42,26 +42,26 @@ def step_impl(context, search_result):
 @when('I click on Sign in button')
 def step_impl(context):
     page = MainPage(context.driver)
-    page.login.click()
+    page.sign_in.click()
 
 
 @then('it contains field username')
 def step_impl(context):
-    page = MainPage(context.driver)
+    page = SignInPage(context.driver)
     page.username.send_keys("user")
     assert_that(page.username, is_not(equal_to(None)), 'Elements not found')
 
 
 @then('it contains field password')
 def step_impl(context):
-    page = MainPage(context.driver)
+    page = SignInPage(context.driver)
     page.password.send_keys("pass")
     assert_that(page.password, is_not(equal_to(None)), 'Elements not found')
 
 
 @then('popup is shown')
 def step_impl(context):
-    page = MainPage(context.driver)
+    page = SignInPage(context.driver)
     assert_that(page.login_form, is_not(equal_to(None)), 'Elements not found')
 
 
@@ -137,10 +137,20 @@ def step(context, search_option, search_result):
 
 
 def get_decorators(function, *args):
+    """
+    :param function:
+    :param args:
+    :return:
+
+    this will call function, and log(print) its step
+    example:
+    get_decorators(step_search_for, context, search_option)
+    @step has to be last decorator used on method
+
+    highly experimental and not tested properly
+    """
     source = inspect.getsource(function)
-    index1 = source.find('@step')
-    index2 = source.find("def")
-    caller = source[index1:index2-1]
+    caller = source[source.find('@step'):source.find("def")-1]
     caller = caller.replace("@step('", "step ").replace("')", "")
     for i in args[1:]:
         substring = caller[caller.index("{"):caller.index("}")+1]

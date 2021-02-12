@@ -4,7 +4,7 @@ from selenium.webdriver.remote.webelement import WebElement
 class welement(WebElement):
     driver = None
 
-    def __init__(self, loc_type, loc_str, return_page = None):
+    def __init__(self, loc_type, loc_str, return_page=None):
         self.loc_type = loc_type
         self.loc_str = loc_str
         self.return_page = return_page
@@ -14,10 +14,7 @@ class welement(WebElement):
 
     def click(self):
         if self.return_page is not None:
-            super.click()
+            self.click()
             return self.return_page
-        return super.click()
-
-some = welement('xpath', '...')
-
+        return self.click()
 

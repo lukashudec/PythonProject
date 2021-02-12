@@ -1,7 +1,7 @@
 @web_test
 Feature: LambdaTest search
 
-  Scenario Outline: Search for google on google
+  Scenario Outline: Test search for game, check if picture and link are shown properly
     Examples: Data
       | game_name         |
       | Prophecy          |
@@ -13,16 +13,14 @@ Feature: LambdaTest search
     And Search results for xpath: //img[@alt='Board Game: <game_name>'] should appear
     And verify list
 
-  @wip1
-  Scenario: Login
+  Scenario: Test if sign in is available and it contains field username and password
     Given I am on the homepage
     When I click on Sign in button
     Then popup is shown
     And it contains field username
     And it contains field password
 
-
-  Scenario Outline: Search for google on google
+  Scenario Outline: Test FAQ page and searching
     Examples: Data
       | search_option | search_result       |
       | API           | BGG_XML_API2        |
@@ -34,8 +32,7 @@ Feature: LambdaTest search
     When I search for <search_option>
     Then List of results with <search_result> is shown
 
-@wip
-  Scenario Outline: Different style of workflow scenario
+  Scenario Outline: Test FAQ page and searching - alternative scenario
     Examples: Data
       | search_option | search_result       |
       | API           | BGG_XML_API2        |
@@ -49,9 +46,8 @@ Feature: LambdaTest search
     * I search for <search_option>
     * List of results with <search_result> is shown
 
-
-@wip2
-  Scenario Outline: trying another approach
+    @wip2
+  Scenario Outline: Test FAQ page and searching - extra alternative scenario
     Examples: Data
       | search_option | search_result       |
       | API           | BGG_XML_API2        |

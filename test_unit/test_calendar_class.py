@@ -18,10 +18,10 @@ def test_calendar_creation(cal1, cal2):
 
 
 @pytest.mark.parametrize("cal1,cal2,result_raw,result_bound",
-                         [(CalendarClass([['12:00', '13:00'], ['16:00', '18:00']], [['09:00', '20:00']]),
-                          CalendarClass([['10:00', '11:45'], ['12:30', '14:30']], [['10:00', '18:30']]),
+                         [(CalendarClass([['12:00', '13:00'], ['16:00', '18:00']], bound1),
+                          CalendarClass([['10:00', '11:45'], ['12:30', '14:30']], bound2),
                           [['10:00', '11:45'], ['12:00', '13:00'], ['12:30', '14:30'], ['16:00', '18:00']],
-                          [['10:00', '18:30']])])
+                         bound2)])
 def test_calendar_merge(cal1, cal2, result_raw, result_bound):
     output_calendar = cal1.merge_with_calendar(cal2)
     assert output_calendar.raw_calendar == result_raw
@@ -39,7 +39,7 @@ def test_get_possible_events_with(cal1, cal2):
 
 @pytest.mark.parametrize("cal1",
                          [(CalendarClass([['09:00', '10:30'], ['11:00', '13:00'], ['16:00', '18:00']],
-                                         [['09:00', '20:00']]))])
+                                         bound1))])
 def test_get_free_time__with_param(cal1):
     assert cal1.get_free_time_pretty(181) == []
     assert cal1.get_free_time_pretty(121) == [['13:00', '16:00']]

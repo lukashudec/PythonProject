@@ -1,6 +1,6 @@
 @class_unit_test
 Feature: Calendar
-  Scenario: Calendar3
+  Scenario: Test possible free time for events for two calendars
     Given calendars
       | calendars                                       | bounds      |
       | 09:00-10:30,12:00-13:00,16:00-18:00             | 09:00-20:00 |
@@ -8,7 +8,7 @@ Feature: Calendar
     Then possible meetings at '15:00-16:00,18:00-18:30'
 
 
-  Scenario Outline: Calendar free time
+  Scenario Outline: Test free time parametrized computation for single calendar
     Examples: data
       | min_duration | outcome                             |
       | 181          | -                                   |
@@ -21,7 +21,7 @@ Feature: Calendar
       | 09:00-10:30,11:00-13:00,16:00-18:00 | 09:00-20:00 |
     Then possible meetings with <min_duration> are at <outcome>
 
-  Scenario: Merging calendars
+  Scenario: Test that merging calendars will return proper calendar
     Given calendars
       | calendars               | bounds      |
       | 12:00-13:00,16:00-18:00 | 09:00-20:00  |
