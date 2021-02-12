@@ -2,6 +2,7 @@ from selenium import webdriver
 import time
 import pytest
 from test_e2e.POM.pages import MainPage, SignInPage
+from test_e2e.utilities.step import scenario
 from test_e2e.utilities.welement import welement
 
 
@@ -14,9 +15,11 @@ def browser():
     time.sleep(1)
     driver.quit()
 
+
+@scenario("Test sign in to application")
 @pytest.mark.parametrize("usr,pwd",
                          [("user1","password"),("user2","password")])
-def test_sign_in(browser,usr,pwd):
+def test_sign_in(browser, usr, pwd):
     main_page = MainPage(browser)
     main_page = main_page.go()
     sign_page:SignInPage = main_page.Sign_in()
