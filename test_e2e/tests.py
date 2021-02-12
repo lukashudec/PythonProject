@@ -4,6 +4,7 @@ import pytest
 from test_e2e.POM.pages import MainPage, SignInPage
 from test_e2e.utilities.step import scenario
 from test_e2e.utilities.welement import welement
+from test_e2e.utilities.designCheck import DesignCheck
 
 
 @pytest.fixture
@@ -26,6 +27,7 @@ def test_sign_in(browser, usr, pwd):
     sign_page.username.send_keys(usr)
     sign_page.password.send_keys(pwd)
     sign_page.save_screen("pic.png")
+    DesignCheck.verify()
     assert sign_page.login_form, "Form not found"
 
 
