@@ -48,3 +48,16 @@ def test_game_search(browser, game_name):
     assert len(result_2) > 0
 
 
+@scenario("Test search in FAQ, check if proper result is shown when searching")
+@pytest.mark.parametrize("search_option, search_result",
+                         [("API", "BGG_XML_API2"),
+                          ("contest", "Official_Contests"),
+                          ("contest", "Unofficial_Contests")])
+def test_faq_page(browser, search_option, search_result):
+    main_page = MainPage(browser).go()
+    faq_page = main_page.click_on_help().click_on_faq()
+    assert faq_page.help_search is not None
+    assert faq_page.faq_article is not None
+    faq_page.help_search.send_keys(search_option)
+    faq_page.help_search_button.click()
+    assert faq_page.check_result_table(search_result) is not None

@@ -15,7 +15,7 @@ class BasePage(object):
         self.driver: WebDriver = driver
 
     def go(self):
-        STEP_IN("Opening page" + self.root)
+        STEP_IN("Opening page " + self.root)
         self.driver.get(self.root)
         return self
 
@@ -36,6 +36,16 @@ class BoardGameBasePage(BasePage):
     sign_in_button = WElement(By.LINK_TEXT, "Sign In")
     help_dropdown = WElement(By.XPATH, "//button[contains(.,'Help ')]")
     faq_button = WElement(By.LINK_TEXT, "FAQ")
+
+    @step("Click on Help")
+    def click_on_help(self):
+        self.help_dropdown.click()
+        return self
+
+    @step("Click on FAQ")
+    def click_on_faq(self):
+        self.faq_button.click()
+        return FaqPage(self.driver)
 
     @step("Click on Sign in button")
     def sign_in(self):
@@ -81,3 +91,7 @@ class FaqPage(BoardGameBasePage):
     help_search_button = WElement(By.NAME, "B1")
     forum_table = WElement(By.XPATH, "//table[@class='forum_table']")
     faq_article = WElement(By.XPATH, "//a[@href='/wiki/page/BoardGameGeek_FAQ']")
+
+    def check_result_table(self,search_result):
+        return self.forum_table.find_element(By.XPATH, "//a[@href='/wiki/page/" + search_result + "']")
+
