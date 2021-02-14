@@ -1,32 +1,27 @@
 import cv2
-
-
-from test_e2e.POM.pages import FaqPage, SignInPage
+import numpy as np
 
 
 class DesignCheck:
-    # This will compare website design to saved version to see if its properly displayed (sensoric)
-
-    def __init__(self, percent_as_succsess=90):
-        self.min = percent_as_succsess
-
-    FAQ_PAGE = {FaqPage, "location"}
-    SIGN_IN_PAGE = {SignInPage, "login_page.png"}
+    # This will compare website design to saved version to see if its properly displayed (visual check)
 
     @staticmethod
-    def verify(screen1 = "pic_50.png", screen2 = "login_page.png"):
-        captured = cv2.imread(screen1)
-        template = cv2.imread(screen2)
-        difference = cv2.subtract(captured, template)
-        b, g, r = cv2.split(difference)
-        if cv2.countNonZero(b) == 0 and cv2.countNonZero(g) == 0 and cv2.countNonZero(r) == 0:
-            print("images are completely Equal")
-        else:
-            print("images are NOT equal")
-            cv2.imwrite("difference.png", difference)
-        # verify result
-        # output 1 : true / false
-        # output 2 : percentage
-        return True
+    def verify(screen1, screen2, mask=255):
+        template = cv2.imread(screen1)
+        captured = cv2.imdecode(np.asarray(bytearray(screen2), dtype=np.uint8), 1 )
+
+        pix_diff = 0
+        pix_count = template.shape[0]*template.shape[1]
+
+        for i in range(0, template.shape[0], 1):
+            for j in range(0, template.shape[1], 1):
+                pix_template = template[i, j]
+                pix_captured = captured[i, j]
+                if pix_template[0] != pix_captured[0] and pix_template[0] != mask:
+                    pix_diff = pix_diff + 1
+
+        return round(((pix_count - pix_diff) / pix_count)*100, 2)
+
+
 
 

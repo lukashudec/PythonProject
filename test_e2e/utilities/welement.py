@@ -1,6 +1,8 @@
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webelement import WebElement
 
-class welement(WebElement):
+
+class WElement(WebElement):
     driver = None
 
     def __init__(self, loc_type, loc_str):
@@ -12,5 +14,8 @@ class welement(WebElement):
 
     @staticmethod
     def set_driver(driver):
-        welement.driver = driver
+        WElement.driver = driver
+
+    def submit_keys(self, input_string):
+        return self.send_keys(input_string + Keys.ENTER)
 
