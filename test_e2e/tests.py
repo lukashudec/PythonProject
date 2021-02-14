@@ -1,7 +1,9 @@
 from selenium import webdriver
 import time
 import pytest
-from test_e2e.POM.pages import MainPage, SignInPage
+from selenium.webdriver.common.keys import Keys
+
+from test_e2e.POM.pages import MainPage, SignInPage, GeekSearchResultPage
 from test_e2e.utilities.step import scenario, STEP_IN
 from test_e2e.utilities.welement import WElement
 
@@ -29,5 +31,21 @@ def test_sign_in(browser, usr, pwd):
 
     assert sign_page.verify() > 90, "Image is different then expected"
     assert sign_page.login_form, "Form not found"
+
+
+@scenario("Test search for game, check if picture and link are shown properly")
+@pytest.mark.parametrize("game_name",
+                         [("Prophecy"),
+                          ("Gloomhaven"),
+                          ("Terraforming Mars")])
+def test_game_search(browser, game_name):
+    main_page = MainPage(browser).go()
+    main_page.search_bar.submit_keys(game_name)
+    result_page = GeekSearchResultPage(browser)
+    STEP_IN("Checking game link and picture")
+    result_1 = result_page.get_game_link(game_name)
+    result_2 = result_page.get_game_image(game_name)
+    assert len(result_1) > 0
+    assert len(result_2) > 0
 
 
