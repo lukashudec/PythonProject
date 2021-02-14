@@ -1,12 +1,13 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 from test_e2e.utilities.designCheck import DesignCheck
 from test_e2e.utilities.step import step, STEP_IN
 from test_e2e.utilities.welement import WElement
 
 
-class BasePage:
+class BasePage(object):
     root = None
     template = None
 
@@ -14,7 +15,7 @@ class BasePage:
         self.driver: WebDriver = driver
 
     def go(self):
-        STEP_IN(("Opening page", self.root))
+        STEP_IN("Opening page" + self.root)
         self.driver.get(self.root)
         return self
 
@@ -46,10 +47,17 @@ class BoardGameBasePage(BasePage):
         self.faq_button.click()
         return FaqPage(self.driver)
 
+    @step("Searching for item")
+    def search(self, inp_str):
+        self.search_bar.send_keys(inp_str + Keys.ENTER)
+        return GeekSearchResultPage(self.driver)
+
+
+class MainPage(BoardGameBasePage):
+    root = 'https://www.boardgamegeek.com/'
+
 
 class GeekSearchResultPage(BoardGameBasePage):
-    game_link = WElement(By.LINK_TEXT, 'Prophecy')
-    game_image = WElement(By.XPATH, "//img[@alt='Board Game: Prophecy']")
 
     def get_game_link(self, inp):
         return self.driver.find_elements(By.LINK_TEXT, inp)
@@ -57,21 +65,17 @@ class GeekSearchResultPage(BoardGameBasePage):
     def get_game_image(self, inp):
         return self.driver.find_elements(By.XPATH, "//img[@alt='Board Game: "+inp+"']")
 
+
 class SignInPage(BasePage):
+
     template = "sign_in_template.png"
     login_form = WElement(By.XPATH, "//form[@name='loginform']")
     username = WElement(By.ID, "inputUsername")
     password = WElement(By.ID, "inputPassword")
 
 
-class MainPage(BoardGameBasePage):
-    root = 'https://www.boardgamegeek.com/'
-
-
-
-
-
 class FaqPage(BoardGameBasePage):
+
     root = 'https://www.boardgamegeek.com/wiki/page/BoardGameGeek_FAQ'
     help_search = WElement(By.ID, "wiki-search")
     help_search_button = WElement(By.NAME, "B1")

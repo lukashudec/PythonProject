@@ -40,8 +40,7 @@ def test_sign_in(browser, usr, pwd):
                           ("Terraforming Mars")])
 def test_game_search(browser, game_name):
     main_page = MainPage(browser).go()
-    main_page.search_bar.submit_keys(game_name)
-    result_page = GeekSearchResultPage(browser)
+    result_page = main_page.search(game_name)
     STEP_IN("Checking game link and picture")
     result_1 = result_page.get_game_link(game_name)
     result_2 = result_page.get_game_image(game_name)
