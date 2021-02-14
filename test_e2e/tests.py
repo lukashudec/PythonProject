@@ -26,7 +26,7 @@ def test_sign_in(browser, usr, pwd):
     STEP_IN("Filling user info")
     sign_page.username.send_keys(usr)
     sign_page.password.send_keys(pwd)
-    sign_page.c
+
     assert sign_page.verify() > 90, "Image is different then expected"
     assert sign_page.login_form, "Form not found"
 
