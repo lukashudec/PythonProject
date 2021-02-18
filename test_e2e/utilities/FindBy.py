@@ -1,8 +1,10 @@
 from selenium.webdriver.remote.webelement import WebElement
 
 
-class WElement(WebElement):
-    # lazy loader for WebElements / WEwrapper
+# lazy loader for WebElements / WEwrapper
+# java eq is @FindBy
+#
+class FindBy(WebElement):
     driver = None
 
     def __init__(self, loc_type, loc_str):
@@ -14,4 +16,4 @@ class WElement(WebElement):
 
     @staticmethod
     def set_driver(driver):
-        WElement.driver = driver
+        FindBy.driver = driver

@@ -5,13 +5,13 @@ from selenium.webdriver.common.keys import Keys
 
 from test_e2e.POM.pages import MainPage, SignInPage, GeekSearchResultPage
 from test_e2e.utilities.step import scenario, STEP_IN
-from test_e2e.utilities.welement import WElement
+from test_e2e.utilities.FindBy import FindBy
 
 
 @pytest.fixture
 def browser():
     driver = webdriver.Chrome('C:/Users/lenovo/Downloads/chromedriver_win32_87/chromedriver.exe')
-    WElement.set_driver(driver)
+    FindBy.set_driver(driver)
     driver.implicitly_wait(2)
     yield driver
     time.sleep(1)
