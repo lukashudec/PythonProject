@@ -1,8 +1,0 @@
-locustfile = performance_test.py
-headless = true
-master = true
-expect-workers = 6
-host = http://target-system
-users = 10
-spawn-rate = 10
-run-time = 10m

@@ -13,7 +13,8 @@ class DesignCheck:
         captured = cv2.imdecode(np.asarray(bytearray(screen2), dtype=np.uint8), 1)
 
         pix_diff = 0
-        pix_count = template.shape[0] * template.shape[1]
+        pix_count = template.shape[0] * \
+                    template.shape[1]
 
         for i in range(0, template.shape[0], 1):
             for j in range(0, template.shape[1], 1):

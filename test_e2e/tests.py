@@ -1,9 +1,7 @@
 from selenium import webdriver
 import time
 import pytest
-from selenium.webdriver.common.keys import Keys
-
-from test_e2e.POM.pages import MainPage, SignInPage, GeekSearchResultPage
+from test_e2e.POM.pages import MainPage
 from test_e2e.utilities.step import scenario, STEP_IN
 from test_e2e.utilities.FindBy import FindBy
 

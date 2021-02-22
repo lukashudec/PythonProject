@@ -1,15 +1,12 @@
 import random
 import time
-
 from locust import User, task, between
-
-from test_e2e.utilities.step import step, measured_step
+from test_e2e.utilities.step import measured_step
 
 
 class FrequentUser(User):
     weight = 5
     wait_time = between(1, 1)
-
 
     @task(2)
     def frequent_task(self):
