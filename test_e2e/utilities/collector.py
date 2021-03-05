@@ -1,6 +1,7 @@
 import pytest
 
-
+''' will collect tests from unit test
+this can be used to run them with locust - thus doing performance unit test'''
 class TestCollector:
 
     def __init__(self, dir=""):
@@ -24,7 +25,7 @@ class TestCollector:
                 filtered.append(test)
         return filtered
 
-
+'''
 test_collector = TestCollector('C:/Users/lenovo/PycharmProjects/calendar/test_unit/test_calendar_class.py')
 
 for test in test_collector.collected:
@@ -34,3 +35,4 @@ print("========================")
 
 for test in test_collector.get_tests('test_calendar_creation'):
     print(str(test))
+'''

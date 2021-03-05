@@ -72,7 +72,7 @@ class GeekSearchResultPage(BoardGameBasePage):
 
 
 class SignInPage(BasePage):
-    template = "./sign_in_template.png"
+    template = "C:/Users/lenovo/PycharmProjects/calendar/test_e2e/resources/sign_in_template.png"
     login_form = FindBy(By.XPATH, "//form[@name='loginform']")
     username = FindBy(By.ID, "inputUsername")
     password = FindBy(By.ID, "inputPassword")

@@ -13,10 +13,7 @@ def run_end2end():
     pytest.main(["-x", "test_e2e/tests.py",
                  '--html-report', './report/pytest',
                  '--verbose',
-                 '--disable-warnings',])
+                 '--disable-warnings'])
 
 
-
-'''run_unit_test_with_coverage()'''
-run_end2end()
 
