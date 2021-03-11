@@ -1,3 +1,5 @@
+import runpy
+
 def run_unit_test_with_coverage():
     import pytest
     pytest.main(["-x", "test_unit/test_calendar_class.py",
@@ -7,6 +9,9 @@ def run_unit_test_with_coverage():
                  '--cov-report', 'html:./report/coverage',
                  '--cov', 'Calendar'])
 
+    if __name__ == '__main__':
+        run_unit_test_with_coverage()
+
 
 def run_end2end():
     import pytest
@@ -15,8 +20,5 @@ def run_end2end():
                  '--verbose',
                  '--disable-warnings'])
 
-    def __call__():
-        run_end2end()
-
-
-
+    if __name__ == '__main__':
+        run_unit_test_with_coverage()

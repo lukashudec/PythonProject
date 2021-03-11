@@ -8,20 +8,20 @@ class FrequentUser(User):
     weight = 5
     wait_time = between(1, 1)
 
-    @task(2)
+    @task(1)
     def frequent_task(self):
-        self.task_step2()
+        self.frequent_task()
 
     @task(1)
     def rare_task(self):
-        self.task_step()
+        self.sleepy_task()
 
-    @measured_step("step 1")
-    def task_step(self):
+    @measured_step("task with sleep, dynamic time")
+    def sleepy_task(self):
         sleep = random.random()
         print("step 1 "+str(sleep))
-        time.sleep(random.random())
+        time.sleep(sleep)
 
-    @measured_step("step 2")
-    def task_step2(self):
+    @measured_step("frequent_task, constant time")
+    def frequent_task(self):
         print("step 2")

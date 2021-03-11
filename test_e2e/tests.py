@@ -62,10 +62,9 @@ def test_faq_page(browser, search_option, search_result):
     assert faq_page.check_result_table(search_result) is not None
 
 
-@scenario("Test search for game, check if picture and link are shown properly")
+@scenario("Test javascript injector and notification creation")
 def test_growler(browser):
     heroku = HerokuPage(browser).go()
-
     heroku.growl('WATCH ME', 'warning')
     heroku.growl('WATCH ME MORE', 'danger')
     heroku.growl('WATCH ME LESS', 'good')
