@@ -20,11 +20,11 @@ class FindBy(WebElement):
         self.measure = measure
 
     def __get__(self, instance, owner):
-        if (FindBy.cache.get(self.describe()) is None) or self.use_cache:
+        if (FindBy.cache.get(self.describe()) is None) or self.use_cache is False:
             start_time = time.time()
             web_element = self.driver.find_element(self.loc_type, self.loc_str)
             stop_time = (time.time() - start_time) * 1000
-            events.request_success.fire(request_type="Element",
+            events.request_success.fire(request_type="Find Element",
                                         name=self.describe(),
                                         response_time=int(stop_time),
                                         response_length=0)

@@ -15,6 +15,7 @@ class BasePage:
     def find(self, element):
         return self.driver.find_element(*element)
 
+# attempt at creation of FindBy equivalent (better implementation in test_e2e/utilities/FindBy
     def __getattribute__(self, attr):
         lol = None
         for i in inspect.getmro(type(self)):

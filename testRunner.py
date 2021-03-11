@@ -15,5 +15,8 @@ def run_end2end():
                  '--verbose',
                  '--disable-warnings'])
 
+    def __call__():
+        run_end2end()
+
 
 

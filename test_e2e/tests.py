@@ -1,8 +1,8 @@
 from selenium import webdriver
 import time
 import pytest
-from test_e2e.POM.pages import MainPage
-from test_e2e.utilities.step import scenario, STEP_IN
+from test_e2e.POM.pages import MainPage, HerokuPage
+from test_e2e.utilities.step import scenario, STEP_IN, step
 from test_e2e.utilities.FindBy import FindBy
 
 
@@ -38,8 +38,9 @@ def test_sign_in(browser, usr, pwd):
                           ("Terraforming Mars")])
 def test_game_search(browser, game_name):
     main_page = MainPage(browser).go()
+    main_page.say("Notification")
     result_page = main_page.search(game_name)
-    STEP_IN("Checking game link and picture")
+    step("Checking game link and picture")
     result_1 = result_page.get_game_link(game_name)
     result_2 = result_page.get_game_image(game_name)
     assert len(result_1) > 0
@@ -59,3 +60,14 @@ def test_faq_page(browser, search_option, search_result):
     faq_page.help_search.send_keys(search_option)
     faq_page.help_search_button.click()
     assert faq_page.check_result_table(search_result) is not None
+
+
+@scenario("Test search for game, check if picture and link are shown properly")
+def test_growler(browser):
+    heroku = HerokuPage(browser).go()
+
+    heroku.growl('WATCH ME', 'warning')
+    heroku.growl('WATCH ME MORE', 'danger')
+    heroku.growl('WATCH ME LESS', 'good')
+    heroku.growl('WATCH ME LESS', 'attention')
+    time.sleep(10)

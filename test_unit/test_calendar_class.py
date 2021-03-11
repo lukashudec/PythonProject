@@ -40,8 +40,7 @@ def test_get_possible_events_with(cal1, cal2):
 
 
 @pytest.mark.parametrize("cal1",
-                         [(CalendarClass([['09:00', '10:30'], ['11:00', '13:00'], ['16:00', '18:00']],
-                                         bound1))])
+                         [(CalendarClass([['09:00', '10:30'], ['11:00', '13:00'], ['16:00', '18:00']], bound1))])
 def test_get_free_time__with_param(cal1):
     assert cal1.get_free_time_pretty(181) == []
     assert cal1.get_free_time_pretty(121) == [['13:00', '16:00']]

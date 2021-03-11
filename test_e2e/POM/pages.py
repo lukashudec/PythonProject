@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 from test_e2e.utilities.DesignCheck import DesignCheck
+from test_e2e.utilities.Growler import Growler
 from test_e2e.utilities.step import step, STEP_IN
 from test_e2e.utilities.FindBy import FindBy
 
@@ -13,6 +14,7 @@ class BasePage(object):
 
     def __init__(self, driver):
         self.driver: WebDriver = driver
+        self.growler = Growler(self.driver)
 
     def go(self):
         STEP_IN("Opening page " + self.root)
@@ -29,6 +31,9 @@ class BasePage(object):
     @step("Verifying GUI look")
     def verify(self):
         return DesignCheck.verify(self.template, self.driver.get_screenshot_as_png())
+
+    def growl(self, message, level):
+        self.growler.growl(message, level)
 
 
 class BoardGameBasePage(BasePage):
@@ -60,6 +65,10 @@ class BoardGameBasePage(BasePage):
 
 class MainPage(BoardGameBasePage):
     root = 'https://www.boardgamegeek.com/'
+
+
+class HerokuPage(BasePage):
+    root = 'https://the-internet.herokuapp.com/'
 
 
 class GeekSearchResultPage(BoardGameBasePage):
