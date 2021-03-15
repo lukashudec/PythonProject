@@ -1,5 +1,5 @@
 from behave import given, then
-from Calendar import CalendarClass
+from src.main.Calendar import CalendarClass
 from hamcrest import *
 
 

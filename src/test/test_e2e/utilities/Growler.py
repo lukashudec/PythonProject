@@ -21,5 +21,11 @@ class Growler:
                                    "document.getElementsByTagName('head')[0].appendChild(element);")
 
     def growl(self, message, level):
+        """
+        :param message: message that will be displayed
+        :param level: color of notification, attention / danger / warning / good
+        :return: nothing
+        known issue > notification can be rendered behind another element so it will be invisible / partly invisible
+        """
         self.inject_js_libraries()
         self.driver.execute_script("simpleNotify.notify({ message:'"+message+"', level: '"+level+"'});")

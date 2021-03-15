@@ -4,7 +4,7 @@ from behave import given, then, when, step
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from hamcrest import *
-from test_behave.features.POM.base_page import FaqPage, MainPage, SignInPage
+from src.test.test_behave.features.POM import FaqPage, MainPage, SignInPage
 
 
 @given('I am on the homepage')

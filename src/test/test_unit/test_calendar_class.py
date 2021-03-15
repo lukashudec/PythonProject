@@ -1,6 +1,6 @@
 import pytest
-from Calendar import CalendarClass
-from test_e2e.utilities.step import measured_step
+from src.main.Calendar import CalendarClass
+from src.test.test_e2e import measured_step
 
 calendar1 = [['09:00', '10:30'], ['12:00', '13:00'], ['16:00', '18:00']]
 bound1 = [['09:00', '20:00']]

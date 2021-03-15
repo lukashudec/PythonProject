@@ -1,9 +1,9 @@
 from selenium import webdriver
 import time
 import pytest
-from test_e2e.POM.pages import MainPage, HerokuPage
-from test_e2e.utilities.step import scenario, STEP_IN, step
-from test_e2e.utilities.FindBy import FindBy
+from src.test.test_e2e import MainPage
+from src.test.test_e2e import scenario, STEP_IN, step
+from src.test.test_e2e import FindBy
 
 
 @pytest.fixture
@@ -64,7 +64,7 @@ def test_faq_page(browser, search_option, search_result):
 
 @scenario("Test javascript injector and notification creation")
 def test_growler(browser):
-    heroku = HerokuPage(browser).go()
+    heroku = MainPage(browser).go()
     heroku.growl('WATCH ME', 'warning')
     heroku.growl('WATCH ME MORE', 'danger')
     heroku.growl('WATCH ME LESS', 'good')

@@ -1,7 +1,7 @@
 import random
 import time
 from locust import User, task, between
-from test_e2e.utilities.step import measured_step
+from src.test.test_e2e import measured_step
 
 
 class FrequentUser(User):
