@@ -1,6 +1,7 @@
+import inspect
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-import inspect
 
 
 class BasePage:
@@ -15,7 +16,7 @@ class BasePage:
     def find(self, element):
         return self.driver.find_element(*element)
 
-# attempt at creation of FindBy equivalent (better implementation in test_e2e/utilities/FindBy
+    # attempt at creation of FindBy equivalent (better implementation in test_e2e/utilities/FindBy
     def __getattribute__(self, attr):
         lol = None
         for i in inspect.getmro(type(self)):
@@ -57,4 +58,3 @@ class FaqPage(BoardGameBasePage):
     help_search_button = (By.NAME, "B1")
     forum_table = (By.XPATH, "//table[@class='forum_table']")
     faq_article = (By.XPATH, "//a[@href='/wiki/page/BoardGameGeek_FAQ']")
-

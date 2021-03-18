@@ -35,12 +35,8 @@ class FindBy(WebElement):
             return FindBy.cache.get(self.describe())
 
     def describe(self):
-        return str(self.loc_type+":"+self.loc_str)
+        return str(self.loc_type + ":" + self.loc_str)
 
     @staticmethod
     def set_driver(driver):
         FindBy.driver = driver
-
-
-
-

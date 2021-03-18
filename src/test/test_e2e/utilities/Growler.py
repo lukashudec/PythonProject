@@ -28,4 +28,4 @@ class Growler:
         known issue > notification can be rendered behind another element so it will be invisible / partly invisible
         """
         self.inject_js_libraries()
-        self.driver.execute_script("simpleNotify.notify({ message:'"+message+"', level: '"+level+"'});")
+        self.driver.execute_script("simpleNotify.notify({ message:'" + message + "', level: '" + level + "'});")

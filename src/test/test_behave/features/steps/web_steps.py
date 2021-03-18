@@ -1,10 +1,11 @@
 import inspect
 
 from behave import given, then, when, step
+from hamcrest import *
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from hamcrest import *
-from src.test.test_behave.features.POM import FaqPage, MainPage, SignInPage
+
+from src.test.test_behave.features.POM.base_page import FaqPage, MainPage, SignInPage
 
 
 @given('I am on the homepage')
@@ -24,7 +25,7 @@ def step_faq_page(context):
 @when('I enter search term: {search}')
 def step_impl(context, search):
     page = MainPage(context.driver)
-    page.search_bar.send_keys(search+Keys.ENTER)
+    page.search_bar.send_keys(search + Keys.ENTER)
 
 
 @then('Search results for link_text: {search_result} should appear')
@@ -104,7 +105,7 @@ def step_search_for(context, search_option):
 def step_list_shown(context, search_result):
     page = FaqPage(context.driver)
     table = page.forum_table
-    result = table.find_element(By.XPATH, "//a[@href='/wiki/page/"+search_result+"']")
+    result = table.find_element(By.XPATH, "//a[@href='/wiki/page/" + search_result + "']")
     assert_that(table, is_not(equal_to(None)), 'Elements not found')
     assert_that(result, is_not(equal_to(None)), 'Elements not found')
 
@@ -126,7 +127,6 @@ def step_faq_click(context):
 @given('scenario hidden in one step {search_option} , {search_result}')
 @step('scenario hidden in one step {search_option} , {search_result}')
 def step(context, search_option, search_result):
-
     get_decorators(step_home_page, context)
     get_decorators(step_help_click, context)
     get_decorators(step_faq_click, context)
@@ -150,10 +150,10 @@ def get_decorators(function, *args):
     highly experimental and not tested properly
     """
     source = inspect.getsource(function)
-    caller = source[source.find('@step'):source.find("def")-1]
+    caller = source[source.find('@step'):source.find("def") - 1]
     caller = caller.replace("@step('", "step ").replace("')", "")
     for i in args[1:]:
-        substring = caller[caller.index("{"):caller.index("}")+1]
+        substring = caller[caller.index("{"):caller.index("}") + 1]
         caller = caller.replace(substring, i)
     print(caller)
     function(*args)

@@ -1,5 +1,6 @@
 import functools
 import time
+
 from locust import events
 
 
@@ -9,7 +10,9 @@ def step(to_print):
         def wrapper_repeat(*args, **kwargs):
             STEP_IN(to_print)
             return func(*args, **kwargs)
+
         return wrapper_repeat
+
     return decorator_repeat
 
 
@@ -30,7 +33,9 @@ def measured_step(name):
                                         response_time=int(stop_time),
                                         response_length=10)
             return ret
+
         return wrapper_repeat
+
     return decorator_repeat
 
 
@@ -40,7 +45,9 @@ def scenario(to_print):
         def wrapper_repeat(*args, **kwargs):
             SCENARIO_IN(to_print)
             return func(*args, **kwargs)
+
         return wrapper_repeat
+
     return decorator_repeat
 
 

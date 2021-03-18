@@ -1,7 +1,9 @@
 import random
 import time
+
 from locust import User, task, between
-from src.test.test_e2e import measured_step
+
+from src.test.test_e2e.utilities.step import measured_step
 
 
 class FrequentUser(User):
@@ -19,7 +21,7 @@ class FrequentUser(User):
     @measured_step("task with sleep, dynamic time")
     def sleepy_task(self):
         sleep = random.random()
-        print("step 1 "+str(sleep))
+        print("step 1 " + str(sleep))
         time.sleep(sleep)
 
     @measured_step("frequent_task, constant time")

@@ -1,5 +1,6 @@
 @class_unit_test
 Feature: Calendar
+
   Scenario: Test possible free time for events for two calendars
     Given calendars
       | calendars                                       | bounds      |
@@ -24,7 +25,7 @@ Feature: Calendar
   Scenario: Test that merging calendars will return proper calendar
     Given calendars
       | calendars               | bounds      |
-      | 12:00-13:00,16:00-18:00 | 09:00-20:00  |
+      | 12:00-13:00,16:00-18:00 | 09:00-20:00 |
       | 10:00-11:45,12:30-14:30 | 10:00-18:30 |
     Then merged calendar
       | calendars                                       | bounds      |

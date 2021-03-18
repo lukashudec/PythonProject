@@ -1,6 +1,7 @@
 import pytest
+
 from src.main.Calendar import CalendarClass
-from src.test.test_e2e import measured_step
+from src.test.test_e2e.utilities.step import measured_step
 
 calendar1 = [['09:00', '10:30'], ['12:00', '13:00'], ['16:00', '18:00']]
 bound1 = [['09:00', '20:00']]
@@ -14,16 +15,16 @@ bound1_string = '09:00-20:00'
 @measured_step("calendar")
 @pytest.mark.parametrize("cal1,cal2",
                          [(CalendarClass(calendar1, bound1),
-                          CalendarClass.from_string(calendar1_string, bound1_string))])
+                           CalendarClass.from_string(calendar1_string, bound1_string))])
 def test_calendar_creation(cal1, cal2):
     assert cal1 == cal2, 'calendars are not equal'
 
 
 @pytest.mark.parametrize("cal1,cal2,result_raw,result_bound",
                          [(CalendarClass([['12:00', '13:00'], ['16:00', '18:00']], bound1),
-                          CalendarClass([['10:00', '11:45'], ['12:30', '14:30']], bound2),
-                          [['10:00', '11:45'], ['12:00', '13:00'], ['12:30', '14:30'], ['16:00', '18:00']],
-                         bound2)])
+                           CalendarClass([['10:00', '11:45'], ['12:30', '14:30']], bound2),
+                           [['10:00', '11:45'], ['12:00', '13:00'], ['12:30', '14:30'], ['16:00', '18:00']],
+                           bound2)])
 def test_calendar_merge(cal1, cal2, result_raw, result_bound):
     output_calendar = cal1.merge_with_calendar(cal2)
     assert output_calendar.raw_calendar == result_raw
@@ -32,7 +33,7 @@ def test_calendar_merge(cal1, cal2, result_raw, result_bound):
 
 @pytest.mark.parametrize("cal1,cal2",
                          [(CalendarClass(calendar1, bound1),
-                          CalendarClass(calendar2, bound2))])
+                           CalendarClass(calendar2, bound2))])
 def test_get_possible_events_with(cal1, cal2):
     free_time1 = cal1.merge_with_calendar(cal2).get_free_time_pretty()
     free_time3 = cal1.get_possible_events_with(cal2)

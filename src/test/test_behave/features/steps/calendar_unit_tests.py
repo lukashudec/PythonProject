@@ -1,6 +1,7 @@
 from behave import given, then
-from src.main.Calendar import CalendarClass
 from hamcrest import *
+
+from src.main.Calendar import CalendarClass
 
 
 @given('calendars')

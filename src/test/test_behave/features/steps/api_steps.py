@@ -1,10 +1,10 @@
+import requests
 from behave import given, then, when
 from hamcrest import *
-import requests
 
 API_ENDPOINT = 'https://jsonplaceholder.typicode.com'
-GET_POSTS = API_ENDPOINT+'/posts/'
-POST_POSTS = API_ENDPOINT+'/posts/'
+GET_POSTS = API_ENDPOINT + '/posts/'
+POST_POSTS = API_ENDPOINT + '/posts/'
 
 
 @given('title:{title}, body:{body}, userId:{user_id}')

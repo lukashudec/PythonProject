@@ -1,11 +1,11 @@
-import os
-
-from selenium import webdriver
 import time
+
 import pytest
+from selenium import webdriver
+
 from src.test.test_e2e.POM.pages import MainPage
-from src.test.test_e2e.utilities.step import scenario, STEP_IN, step
 from src.test.test_e2e.utilities.FindBy import FindBy
+from src.test.test_e2e.utilities.step import scenario, STEP_IN, step
 
 
 @pytest.fixture
@@ -23,7 +23,7 @@ def browser():
                          [("user1", "password"),
                           ("user2", "password")])
 def test_sign_in(browser, usr, pwd):
-    sign_page = MainPage(browser).go()\
+    sign_page = MainPage(browser).go() \
         .sign_in()
     STEP_IN("Filling user info")
     sign_page.username.send_keys(usr)

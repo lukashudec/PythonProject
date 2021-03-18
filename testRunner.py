@@ -1,5 +1,3 @@
-import runpy
-
 def run_unit_test_with_coverage():
     import pytest
     pytest.main(["-x", "test_unit/test_calendar_class.py",
