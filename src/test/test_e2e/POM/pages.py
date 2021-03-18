@@ -2,10 +2,10 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from src.test.test_e2e import DesignCheck
-from src.test.test_e2e import Growler
-from src.test.test_e2e import step, STEP_IN
-from src.test.test_e2e import FindBy
+from src.test.test_e2e.utilities.DesignCheck import DesignCheck
+from src.test.test_e2e.utilities.FindBy import FindBy
+from src.test.test_e2e.utilities.Growler import Growler
+from src.test.test_e2e.utilities.step import STEP_IN, step
 
 
 class BasePage(object):

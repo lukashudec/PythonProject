@@ -1,14 +1,16 @@
+import os
+
 from selenium import webdriver
 import time
 import pytest
-from src.test.test_e2e import MainPage
-from src.test.test_e2e import scenario, STEP_IN, step
-from src.test.test_e2e import FindBy
+from src.test.test_e2e.POM.pages import MainPage
+from src.test.test_e2e.utilities.step import scenario, STEP_IN, step
+from src.test.test_e2e.utilities.FindBy import FindBy
 
 
 @pytest.fixture
 def browser():
-    driver = webdriver.Chrome('C:/Users/lenovo/Downloads/chromedriver_win32_87/chromedriver.exe')
+    driver = webdriver.Chrome('C:/Users/lenovo/Downloads/chromedriver_win32_89/chromedriver.exe')
     FindBy.set_driver(driver)
     driver.implicitly_wait(2)
     yield driver
